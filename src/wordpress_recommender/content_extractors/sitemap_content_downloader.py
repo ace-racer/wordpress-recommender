@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import logging
 import sys
 import fire
+import pandas as pd
+from wordpress_recommender.utils import get_content_file_path_for_sitemap
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +20,8 @@ def get_site_content(sitemap_url: str):
 
     # Check if the request was successful
     if response.status_code == 200:
+        site_content = []
+
         # Parse the sitemap XML using BeautifulSoup
         soup = BeautifulSoup(response.text, "xml")
 
@@ -47,28 +51,32 @@ def get_site_content(sitemap_url: str):
                 # Extract title
                 title = page_soup.title.string if page_soup.title else ""
 
-                # Extract the date (you will need to modify this based on the structure of your page)
-                # date = page_soup.find('lastmod').text if page_soup.find('lastmod') else None
-
-                # Extract content (cleaned)
+                # Extract content
                 content = ""
                 for paragraph in page_soup.find_all("p"):
                     content += paragraph.get_text() + "\n"
 
-                # Now, you can process the 'url', 'date', and 'content' as per your requirements
-                # For example, you can save them to a file or a database, or perform further processing
+                date = page_soup.find("time").contents[0] if page_soup.find("time") else ""
+                site_content.append(
+                    {
+                        "url": url,
+                        "title": title,
+                        "date": date,
+                        "content": content,
+                    }
+                )
 
-                print("URL:", url)
-                print(f"title: {title}")
-                # print('Date:', date)
-                # Print or save the content as needed
-                print(
-                    "Content:", content[:1000]
-                )  # Print the first 100 characters for demonstration
                 print("-" * 50)
 
             else:
                 logger.error(f"Failed to fetch page URL: {url}")
+        content_df = pd.DataFrame(site_content)
+        file_path = get_content_file_path_for_sitemap(sitemap_url)
+        content_df.to_csv(file_path, index=False)
+
+    else:
+        logger.error(f"Could not parse the sitemap: {sitemap_url}")
+
 
 
 if __name__ == "__main__":
