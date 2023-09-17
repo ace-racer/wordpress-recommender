@@ -1,15 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 import logging
-import sys
-import fire
-import pandas as pd
-from wordpress_recommender.utils import get_content_file_path_for_sitemap
+from typing import List
 
 logger = logging.getLogger(__name__)
 
 
-def get_site_content(sitemap_url: str):
+def get_site_content(sitemap_url: str) -> List[dict]:
     if not sitemap_url.endswith(".xml"):
         raise ValueError(f"Provided sitemap {sitemap_url} is not valid sitemap url")
 
@@ -70,15 +67,7 @@ def get_site_content(sitemap_url: str):
 
             else:
                 logger.error(f"Failed to fetch page URL: {url}")
-        content_df = pd.DataFrame(site_content)
-        file_path = get_content_file_path_for_sitemap(sitemap_url)
-        content_df.to_csv(file_path, index=False)
-
+        return site_content
     else:
         logger.error(f"Could not parse the sitemap: {sitemap_url}")
-
-
-
-if __name__ == "__main__":
-    fire.Fire(get_site_content)
-    sys.exit(0)
+    return []
