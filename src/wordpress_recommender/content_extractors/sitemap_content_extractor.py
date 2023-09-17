@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import logging
 from typing import List
+from tqdm import tqdm
 
 logger = logging.getLogger(__name__)
 
@@ -24,13 +25,11 @@ def get_site_content(sitemap_url: str) -> List[dict]:
 
         # Extract URLs from the sitemap
         locs = soup.find_all("loc")
+        filtered_locs = [loc for loc in locs if loc.prefix == ""]
+        print(f"Total content pages to download: {len(filtered_locs)}")
 
-        for loc in locs:
+        for loc in tqdm(filtered_locs, desc="Downloading content from blog..."):
             logger.info(f"loc: {dir(loc)} prefix: {loc.prefix}")
-
-            if loc.prefix != "":
-                logger.warning(f"Invalid tag prefix [{loc.prefix}]...")
-                continue
 
             # Extract the URL
             url = loc.text
@@ -62,8 +61,6 @@ def get_site_content(sitemap_url: str) -> List[dict]:
                         "content": content,
                     }
                 )
-
-                print("-" * 50)
 
             else:
                 logger.error(f"Failed to fetch page URL: {url}")
