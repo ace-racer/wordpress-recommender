@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 def get_content_file_path_for_sitemap(sitemap_url: str) -> str:
     file_name = urlparse(sitemap_url).netloc.replace(".", "_") + ".csv"
     logging.info(f"file_name: {file_name}")
-    file_path = os.path.join(DATA_LOC, urlparse(sitemap_url).netloc.replace(".", "_") + ".csv")
+    file_path = os.path.join(DATA_LOC, file_name)
     return file_path
 
 
@@ -19,3 +19,11 @@ def write_site_content_to_file(site_content: List[dict], sitemap_url: str):
     content_df = pd.DataFrame(site_content)
     file_path = get_content_file_path_for_sitemap(sitemap_url)
     content_df.to_csv(file_path, index=False)
+
+
+def get_index_path_for_sitemap(sitemap_url: str) -> str:
+    folder_name = urlparse(sitemap_url).netloc.replace(".", "_")
+    logging.info(f"folder_name: {folder_name}")
+    folder_path = os.path.join(DATA_LOC, folder_name)
+    os.makedirs(folder_path, exist_ok=True)
+    return folder_path
