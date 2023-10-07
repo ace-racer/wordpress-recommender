@@ -16,7 +16,7 @@
 - `make` is installed to be able to run commands from terminal, else run the commands from the make file directly in the terminal after supplying the required arguments
 - Adjust the below environment variables before running any of the below steps if required:
     - `DATA_LOC`: Location where all the application data will be stored. By default, it is stored in a `data` folder in the current directory. This folder will be created if it does not exist during creation.
-- HuggingFace key (free) to use their inference endpoints to generate embeddings using Sentence Transformer models
+    - HuggingFace key (free) to use their inference endpoints to generate embeddings using Sentence Transformer models. Export the key to an environment variable called `HF_KEY` before creating or querying the index as shown in the steps below.
 
 ### Steps
 1. Download all content from the target Wordpress blog, e.g.:  `make download-content sitemap_url="https://synergychronicler.wordpress.com/sitemap.xml"`
