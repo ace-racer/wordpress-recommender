@@ -6,6 +6,9 @@ authors = ["Anurag Chatterjee"]
 readme = "README.md"
 packages = [{include = "wordpress_recommender", from="src"}]
 
+[tool.poetry.scripts]
+wordpress-recommender = "wordpress_recommender.main:app"
+
 [tool.poetry.dependencies]
 python = "^3.9"
 sentence-transformers = ">=2.2.2"

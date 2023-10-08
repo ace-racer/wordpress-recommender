@@ -9,11 +9,16 @@ from wordpress_recommender.utils import (
 from wordpress_recommender.retrievers.chroma_index_retriever import query_index
 from enum import Enum
 
+app = typer.Typer()
+
+
 class Steps(str, Enum):
     download_content = "download-content"
     build_index = "build-index"
     query_index = "query-index"
 
+
+@app.command()
 def main(step: Steps, sitemap_url: str, query: str = ""):
     """
     An application to recommend articles from a Wordpress blog based on user's query using semantic search

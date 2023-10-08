@@ -34,6 +34,6 @@ Apply this on the downloaded content and store the Chroma index to disk for now.
 - [ ] Create a hosted product that can be used by others via Wordpress plugins
 
 ## Technical enhancements
-- [ ] Publish as a package to PyPI
+- [X] Publish as a package to PyPI
 - [ ] Add unit tests
 - [ ] Write a build pipeline and use GitHub actions to trigger build process on code push and PR
