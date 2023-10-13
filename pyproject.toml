@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wordpress-recommender"
-version = "0.1.1"
+version = "0.1.2"
 description = "An application to recommend articles from a Wordpress blog based on user's query using semantic search"
 authors = ["Anurag Chatterjee"]
 readme = "src/wordpress_recommender/README.md"

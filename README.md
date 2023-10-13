@@ -17,11 +17,12 @@
 - Adjust the below environment variables before running any of the below steps if required:
     - `DATA_LOC`: Location where all the application data will be stored. By default, it is stored in a `data` folder in the current directory. This folder will be created if it does not exist during creation.
     - HuggingFace key (free) to use their inference endpoints to generate embeddings using Sentence Transformer models. Export the key to an environment variable called `HF_KEY` before creating or querying the index as shown in the steps below.
+    - Override the default HuggingFace embeddings model by specifying the name in the environment variable `HF_EMBEDDINGS_MODEL_NAME`. If not provided, the `sentence-transformers/all-MiniLM-l6-v2` model is used to generate embeddings.
 
 ### Steps
 1. Download all content from the target Wordpress blog, e.g.:  `make download-content sitemap_url="https://synergychronicler.wordpress.com/sitemap.xml"`
 2. Create index after content is downloaded, e.g.: `export HF_KEY="hf_ywerwe..."` then `make generate-index sitemap_url="https://synergychronicler.wordpress.com/sitemap.xml"`
-3. Query index, e.g.: `export HF_KEY="hf_ywerwe..."` then `make query-index sitemap_url="https://synergychronicler.wordpress.com/sitemap.xml" query="How are the AI regulations different in different parts of the world?"`
+3. Query index, e.g.: `export HF_KEY="hf_ywerwe..."` then `make query-index sitemap_url="https://synergychronicler.wordpress.com/sitemap.xml" query="How are the AI regulations different in different parts of the world?" top=3`
 4. TODO
 
 ## Roadmap

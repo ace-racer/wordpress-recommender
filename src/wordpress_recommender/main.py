@@ -5,8 +5,12 @@ from wordpress_recommender.index_creators.chroma_index_creator import create_ind
 from wordpress_recommender.utils import (
     get_content_file_path_for_sitemap,
     get_index_path_for_sitemap,
+    get_final_result_set,
 )
-from wordpress_recommender.retrievers.chroma_index_retriever import query_index
+from wordpress_recommender.retrievers.chroma_index_retriever import (
+    query_index,
+    RETRIEVAL_SCORE_FIELD_NAME,
+)
 from enum import Enum
 
 app = typer.Typer()
@@ -19,7 +23,7 @@ class Steps(str, Enum):
 
 
 @app.command()
-def main(step: Steps, sitemap_url: str, query: str = ""):
+def main(step: Steps, sitemap_url: str, rebuild_index: bool = False, query: str = "", top: int = 5):
     """
     An application to recommend articles from a Wordpress blog based on user's query using semantic search
     """
@@ -36,19 +40,17 @@ def main(step: Steps, sitemap_url: str, query: str = ""):
         content_file_path = get_content_file_path_for_sitemap(sitemap_url)
         print("Generating index")
         index_path = get_index_path_for_sitemap(sitemap_url)
-        create_index(content_file_path, index_path)
+        create_index(content_file_path, index_path, rebuild_index)
         print("Finished index creation...")
     elif step == Steps.query_index:
         print(f"Generating results for query: {query}")
         index_file_path = get_index_path_for_sitemap(sitemap_url)
 
         print("Generating results")
-        docs = query_index(index_file_path, query)
-        print(f"Retrieved {len(docs)} results for query")
-        print("Most relevant result details...")
-        print(f"URL: {docs[0].metadata['source']}")
-        print(f"Content: {docs[0].page_content}")
-        return docs
+        docs = query_index(index_file_path, query, top)
+        result_df = get_final_result_set(sitemap_url, docs, RETRIEVAL_SCORE_FIELD_NAME)
+        print(f"Final results:\n{result_df}")
+        return result_df
     else:
         print(f"Invalid step chosen: {step}")
 

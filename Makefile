@@ -17,10 +17,10 @@ download-content:
 	@poetry run python src/wordpress_recommender/main.py download-content "$(sitemap_url)"
 
 generate-index:
-	@poetry run python src/wordpress_recommender/main.py build-index "$(sitemap_url)"
+	@poetry run python src/wordpress_recommender/main.py build-index "$(sitemap_url)" --rebuild-index
 
 query-index:
-	@poetry run python src/wordpress_recommender/main.py query-index "$(sitemap_url)" --query "$(query)"
+	@poetry run python src/wordpress_recommender/main.py query-index "$(sitemap_url)" --query "$(query)" --top $(top)
 
 
 complete-check: lint-check format-check
