@@ -19,10 +19,15 @@
     - HuggingFace key (free) to use their inference endpoints to generate embeddings using Sentence Transformer models. Export the key to an environment variable called `HF_KEY` before creating or querying the index as shown in the steps below.
     - Override the default HuggingFace embeddings model by specifying the name in the environment variable `HF_EMBEDDINGS_MODEL_NAME`. If not provided, the `sentence-transformers/all-MiniLM-l6-v2` model is used to generate embeddings.
 
+
+### Executing tests:
+- Set the values of the environment variables inside a `.env` file by copying from the template file
+- Execute all tests via: `poetry run pytest tests/`
+
 ### Steps
-1. Download all content from the target Wordpress blog, e.g.:  `make download-content sitemap_url="https://synergychronicler.wordpress.com/sitemap.xml"`
-2. Create index after content is downloaded, e.g.: `export HF_KEY="hf_ywerwe..."` then `make generate-index sitemap_url="https://synergychronicler.wordpress.com/sitemap.xml"`
-3. Query index, e.g.: `export HF_KEY="hf_ywerwe..."` then `make query-index sitemap_url="https://synergychronicler.wordpress.com/sitemap.xml" query="How are the AI regulations different in different parts of the world?" top=3`
+1. Download all content from the target Wordpress blog, e.g.:  `make download-content sitemap_url="https://learnwoo.com/post-sitemap1.xml"`
+2. Create index after content is downloaded, e.g.: `export HF_KEY="hf_ywerwe..."` then `make generate-index sitemap_url="https://learnwoo.com/post-sitemap1.xml"`
+3. Query index, e.g.: `export HF_KEY="hf_ywerwe..."` then `make query-index sitemap_url="https://learnwoo.com/post-sitemap1.xml" query="What is web scraping mostly used for?" top=3`
 4. TODO
 
 ## Roadmap
@@ -36,5 +41,5 @@ Apply this on the downloaded content and store the Chroma index to disk for now.
 
 ## Technical enhancements
 - [X] Publish as a package to PyPI
-- [ ] Add unit tests
-- [ ] Write a build pipeline and use GitHub actions to trigger build process on code push and PR
+- [X] Add tests
+- [X] Write a build pipeline and use GitHub actions to trigger build process on code or tag push and PR

@@ -8,9 +8,9 @@ An application to recommend articles from a Wordpress blog based on user's query
     - Override the default HuggingFace embeddings model by specifying the name in the environment variable `HF_EMBEDDINGS_MODEL_NAME`. If not provided, the `sentence-transformers/all-MiniLM-l6-v2` model is used to generate embeddings.
 
 ## How to use the CLI after installing the package from PyPI:
-1. Download content: `wordpress-recommender download-content "https://synergychronicler.wordpress.com/sitemap.xml"`
-2. Build index using the downloaded content: `wordpress-recommender generate-index "https://synergychronicler.wordpress.com/sitemap.xml"`
-3. Query index built in previous step: `wordpress-recommender query-index "https://synergychronicler.wordpress.com/sitemap.xml" --query "How are the AI regulations different in different parts of the world?"`
+1. Download content: `wordpress-recommender download-content "https://learnwoo.com/post-sitemap1.xml"`
+2. Build index using the downloaded content: `wordpress-recommender generate-index "https://learnwoo.com/post-sitemap1.xml"`
+3. Query index built in previous step: `wordpress-recommender query-index "https://learnwoo.com/post-sitemap1.xml" --query "How are the AI regulations different in different parts of the world?"`
 
 ## Release notes:
 
@@ -22,4 +22,9 @@ An application to recommend articles from a Wordpress blog based on user's query
 - Allow client to rebuild index by providing the option `--rebuild_index` in the CLI
 - *Breaking change* Return final output as a sorted pandas dataframe with all original columns present along with a new column for the score e.g. `cosine_distance` or `cosine_similarity`
 - Allow client to override the number of results returned by passing an optional `--top` parameter with an integer value
+
+### 0.1.3
+- Minor updates to docs
+- Add tests
+- Add GitHub Actions to publish package
 
