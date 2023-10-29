@@ -38,7 +38,7 @@ jobs:
     - build
     runs-on: ubuntu-latest
     environment:
-      name: pypi
+      name: wp-reco-pypi
       url: https://pypi.org/p/wordpress-recommender
     permissions:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
@@ -99,7 +99,7 @@ jobs:
     runs-on: ubuntu-latest
 
     environment:
-      name: testpypi
+      name: wp-reco-test-pypi
       url: https://test.pypi.org/p/wordpress-recommender
 
     permissions:
